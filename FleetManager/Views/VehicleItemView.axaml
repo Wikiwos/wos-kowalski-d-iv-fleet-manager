@@ -1,10 +1,41 @@
-<!-- (UserControl - widok) -->
-
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FleetManager.Views.VehicleItemView">
-    Welcome to Avalonia!
+             xmlns:vm="using:FleetManager.ViewModels"
+             x:Class="FleetManager.Views.VehicleItemView"
+             x:DataType="vm:VehicleItemViewModel">
+
+    <Border Background="#1E1E2E" CornerRadius="10"
+            Padding="16,12" Margin="6,4">
+        <StackPanel>
+
+            
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,4">
+                <TextBlock Text="{Binding Name}"
+                           FontSize="16" FontWeight="Bold" Foreground="White"/>
+                <Border Grid.Column="1"
+                        Background="{Binding StatusColor}"
+                        CornerRadius="5" Padding="10,3">
+                    <TextBlock Text="{Binding StatusText}"
+                               Foreground="White" FontSize="12"/>
+                </Border>
+            </Grid>
+
+            
+            <TextBlock Text="{Binding LicensePlate}"
+                       Foreground="#888888" FontSize="13" Margin="0,0,0,10"/>
+            
+            <DockPanel Margin="0,0,0,4">
+                <TextBlock Text="Paliwo" Foreground="#AAAAAA" FontSize="12"/>
+                <TextBlock Text="{Binding FuelLevel, StringFormat='{}{0:0}%'}"
+                           Foreground="White" FontSize="12"
+                           HorizontalAlignment="Right"/>
+            </DockPanel>
+            <ProgressBar Value="{Binding FuelLevel}"
+                         Minimum="0" Maximum="100" Height="8"
+                         CornerRadius="4" Background="#333344"
+                         Foreground="{Binding FuelColor}"/>
+
+        </StackPanel>
+    </Border>
+
 </UserControl>
