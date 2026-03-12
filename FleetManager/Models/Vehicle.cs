@@ -1,6 +1,7 @@
 namespace FleetManager.Models;
 
-public class Vehicle
+public class Vehicle 
 {
     
 }
+// 
