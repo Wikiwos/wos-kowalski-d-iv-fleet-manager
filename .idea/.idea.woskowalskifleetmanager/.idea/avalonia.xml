@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="woskowalskifleetmanager/App.axaml" value="woskowalskifleetmanager/woskowalskifleetmanager.csproj" />
+        <entry key="woskowalskifleetmanager/Views/MainWindow.axaml" value="woskowalskifleetmanager/woskowalskifleetmanager.csproj" />
+        <entry key="woskowalskifleetmanager/Views/VehicleItemVIew.axaml" value="woskowalskifleetmanager/woskowalskifleetmanager.csproj" />
+        <entry key="woskowalskifleetmanager/Views/VehicleItemView.axaml" value="woskowalskifleetmanager/woskowalskifleetmanager.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
