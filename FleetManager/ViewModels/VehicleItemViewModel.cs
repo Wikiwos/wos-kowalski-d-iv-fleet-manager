@@ -1,14 +1,21 @@
 using FleetManager.Models;
+using ReactiveUI;
+using System.Reactive;
  
 namespace FleetManager.ViewModels;
  
 public class VehicleItemViewModel : ViewModelBase
 {
     private readonly Vehicle _vehicle;
+    public ReactiveCommand<Unit, Unit> RefuelCommand { get; }
  
     public VehicleItemViewModel(Vehicle vehicle)
     {
         _vehicle = vehicle;
+        RefuelCommand = ReactiveCommand.Create(
+            Refuel,
+            this.WhenAnyValue(x => x.CanRefuel)
+        );
     }
  
     public string Name         => _vehicle.Name;
@@ -56,5 +63,15 @@ public class VehicleItemViewModel : ViewModelBase
             else
                 return "#4CAF50";
         }
+    }
+    
+    public bool CanRefuel => _vehicle.Status == VehicleStatus.Available || _vehicle.Status == VehicleStatus.Service;
+    
+    private void Refuel()
+    {
+        _vehicle.FuelLevel = 100;
+
+        this.RaisePropertyChanged(nameof(FuelLevel));
+        this.RaisePropertyChanged(nameof(FuelColor));
     }
 }

@@ -35,6 +35,12 @@
                          CornerRadius="4" Background="#333344"
                          Foreground="{Binding FuelColor}"/>
 
+            <Button Content="Tankuj"
+                    Margin="0,10,0,0"
+                    Height="30"
+                    IsEnabled="{Binding CanRefuel}"
+                    Command="{Binding RefuelCommand}" />
+            
         </StackPanel>
     </Border>
 
