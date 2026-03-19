@@ -1,5 +1,5 @@
 [
-  {
-    
-  }
+  { "Name": "Volvo FH16",      "LicensePlate": "WA 12345", "FuelLevel": 78, "Status": 0 },
+  { "Name": "Scania R500",     "LicensePlate": "KR 98765", "FuelLevel": 12, "Status": 2 },
+  { "Name": "Mercedes Actros", "LicensePlate": "PO 55321", "FuelLevel": 45, "Status": 1 }
 ]

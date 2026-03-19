@@ -9,7 +9,9 @@ namespace FleetManager.Services
 {
     public class VehicleService : IVehicleService
     {
-        private const string FileName = "vehicles.json";
+        private static readonly string FileName = Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory, "Assets", "vehicles.json"
+        );
         private readonly JsonSerializerOptions _options = new()
         {
             WriteIndented = true,
