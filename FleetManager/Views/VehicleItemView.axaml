@@ -47,6 +47,12 @@
                     IsEnabled="{Binding CanStartTrip}"
                     Command="{Binding StartTripCommand}" />
             
+            <Button Content="Napraw"
+                    Margin="0,5,0,0"
+                    Height="30"
+                    IsEnabled="{Binding CanRepair}"
+                    Command="{Binding RepairCommand}" />
+            
         </StackPanel>
     </Border>
 

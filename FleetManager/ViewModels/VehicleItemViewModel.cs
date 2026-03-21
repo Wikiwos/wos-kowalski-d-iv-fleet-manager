@@ -8,8 +8,8 @@ public class VehicleItemViewModel : ViewModelBase
 {
     private readonly Vehicle _vehicle;
     public ReactiveCommand<Unit, Unit> RefuelCommand { get; }
-    
     public ReactiveCommand<Unit, Unit> StartTripCommand { get; }
+    public ReactiveCommand<Unit, Unit> RepairCommand { get; }
  
     public VehicleItemViewModel(Vehicle vehicle)
     {
@@ -24,6 +24,11 @@ public class VehicleItemViewModel : ViewModelBase
             StartTrip,
             this.WhenAnyValue(x => x.CanStartTrip)
         );
+        
+        RepairCommand = ReactiveCommand.Create(
+            Repair,
+            this.WhenAnyValue(x => x.CanRepair)
+        );
     }
  
     public string Name => _vehicle.Name;
@@ -31,6 +36,8 @@ public class VehicleItemViewModel : ViewModelBase
     public double FuelLevel => _vehicle.FuelLevel;
     public bool CanRefuel => _vehicle.Status == VehicleStatus.Available || _vehicle.Status == VehicleStatus.Service;
     public bool CanStartTrip => _vehicle.FuelLevel >= 15 && _vehicle.Status != VehicleStatus.Service;
+    public bool CanRepair => _vehicle.Status == VehicleStatus.Service;
+    
 
  
     public string StatusText
@@ -82,7 +89,8 @@ public class VehicleItemViewModel : ViewModelBase
 
         this.RaisePropertyChanged(nameof(FuelLevel));
         this.RaisePropertyChanged(nameof(FuelColor));
-        this.RaisePropertyChanged(nameof(CanStartTrip));
+        this.RaisePropertyChanged(nameof(CanStartTrip)); 
+
     }
     
     private void StartTrip()
@@ -91,6 +99,17 @@ public class VehicleItemViewModel : ViewModelBase
 
         this.RaisePropertyChanged(nameof(StatusText));
         this.RaisePropertyChanged(nameof(StatusColor));
+        this.RaisePropertyChanged(nameof(CanRefuel));
+        this.RaisePropertyChanged(nameof(CanStartTrip));
+    }
+    
+    private void Repair()
+    {
+        _vehicle.Status = VehicleStatus.Available;
+
+        this.RaisePropertyChanged(nameof(StatusText));
+        this.RaisePropertyChanged(nameof(StatusColor));
+        this.RaisePropertyChanged(nameof(CanRepair));
         this.RaisePropertyChanged(nameof(CanRefuel));
         this.RaisePropertyChanged(nameof(CanStartTrip));
     }
