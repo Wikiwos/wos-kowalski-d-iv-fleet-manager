@@ -8,19 +8,30 @@ public class VehicleItemViewModel : ViewModelBase
 {
     private readonly Vehicle _vehicle;
     public ReactiveCommand<Unit, Unit> RefuelCommand { get; }
+    
+    public ReactiveCommand<Unit, Unit> StartTripCommand { get; }
  
     public VehicleItemViewModel(Vehicle vehicle)
     {
         _vehicle = vehicle;
+        
         RefuelCommand = ReactiveCommand.Create(
             Refuel,
             this.WhenAnyValue(x => x.CanRefuel)
         );
+        
+        StartTripCommand = ReactiveCommand.Create(
+            StartTrip,
+            this.WhenAnyValue(x => x.CanStartTrip)
+        );
     }
  
-    public string Name         => _vehicle.Name;
+    public string Name => _vehicle.Name;
     public string LicensePlate => _vehicle.LicensePlate;
-    public double FuelLevel    => _vehicle.FuelLevel;
+    public double FuelLevel => _vehicle.FuelLevel;
+    public bool CanRefuel => _vehicle.Status == VehicleStatus.Available || _vehicle.Status == VehicleStatus.Service;
+    public bool CanStartTrip => _vehicle.FuelLevel >= 15 && _vehicle.Status != VehicleStatus.Service;
+
  
     public string StatusText
     {
@@ -65,13 +76,22 @@ public class VehicleItemViewModel : ViewModelBase
         }
     }
     
-    public bool CanRefuel => _vehicle.Status == VehicleStatus.Available || _vehicle.Status == VehicleStatus.Service;
-    
     private void Refuel()
     {
         _vehicle.FuelLevel = 100;
 
         this.RaisePropertyChanged(nameof(FuelLevel));
         this.RaisePropertyChanged(nameof(FuelColor));
+        this.RaisePropertyChanged(nameof(CanStartTrip));
+    }
+    
+    private void StartTrip()
+    {
+        _vehicle.Status = VehicleStatus.InRoute;
+
+        this.RaisePropertyChanged(nameof(StatusText));
+        this.RaisePropertyChanged(nameof(StatusColor));
+        this.RaisePropertyChanged(nameof(CanRefuel));
+        this.RaisePropertyChanged(nameof(CanStartTrip));
     }
 }
